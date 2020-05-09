@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import styled from "styled-components";
-
 //Images
 import ic_close_gray from "./../../images/ic_close_gray.svg";
 
@@ -41,42 +40,17 @@ const PopupDetailStyled = styled.div`
     }
   }
 `;
-let isMouseDown = false;
 function PopupDetail(props) {
   const { title, points, author, time, comments } = props.data;
-
-  const _handle = () => {
-    if (!isMouseDown) {
-      props.togglePopupDetail();
-    }
-  };
-  useEffect(() => {
-    document.getElementById("img_id").addEventListener("click", () => {
-      props.togglePopupDetail();
-      _handle();
-    });
-    return () => {
-      document.getElementById("img_id").removeEventListener("click", () => {
-        props.togglePopupDetail();
-        _handle();
-      });
-    };
-  }, []);
   return (
-    <PopupDetailStyled
-      onMouseDown={() => {
-        if (!isMouseDown) {
-          props.togglePopupDetail();
-        }
-      }}
-    >
+    <PopupDetailStyled>
       >
       <div className="popup-bound" id="popup_detail_id">
         <img
-          onMouseLeave={() => (isMouseDown = false)}
           src={ic_close_gray}
           alt="ic_close"
           id="img_id"
+          onClick={() => props.togglePopupDetail()}
         />
         <h2>Tile: {!!title && title}</h2>
         <h3>Points: {!!points && points} points</h3>
